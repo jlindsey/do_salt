@@ -1,0 +1,11 @@
+---
+state_output: changes
+autosign_file: /etc/salt/autosign
+file_roots:
+  base:
+    - /srv/salt/states
+pillar_roots:
+  base:
+    - /srv/salt/pillar
+ext_pillar:
+  - stack: /srv/salt/pillar/stack.cfg
