@@ -1,0 +1,8 @@
+---
+packages:
+  - zsh
+  - tree
+  - zip
+  - unzip
+  - git
+  - haveged

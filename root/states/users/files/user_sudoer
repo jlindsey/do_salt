@@ -1,0 +1,3 @@
+{%- for spec in specs -%}
+{{ username }}  {{ spec }}
+{%- endfor -%}
