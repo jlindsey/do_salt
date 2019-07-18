@@ -3,13 +3,13 @@ from __future__ import absolute_import, print_function
 from tempfile import NamedTemporaryFile
 from textwrap import dedent
 
-from os import path
+from os import getenv, path
 
 from invoke import task
 from invoke.exceptions import Exit
 
 
-KEY_EMAIL = "salt@jlindsey.me"
+KEY_EMAIL = getenv("GPG_KEY_EMAIL")
 
 
 @task
