@@ -10,7 +10,7 @@
     user.absent:
         - name: ubuntu
 
-{%- for username, conf in salt['pillar.get']('users', {})items() %}
+{%- for username, conf in salt['pillar.get']('users', {}).items() %}
 .user-{{ username }}:
     user.present:
         - name: {{ username }}

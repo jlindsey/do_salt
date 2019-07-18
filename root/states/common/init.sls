@@ -1,6 +1,6 @@
 #!stateconf yaml . jinja
 
 include:
-    - .packages
-    - .fail2ban
-    - .scheduled_highstate
+    - common.packages
+    - common.fail2ban
+    - common.scheduled_highstate
