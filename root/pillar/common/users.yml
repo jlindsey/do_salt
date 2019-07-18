@@ -4,7 +4,7 @@ users:
     shell: /usr/bin/zsh
     password: $5$5dcdc07c2e193015$X4l4xNEPvuvZcH.n9t3o4LYNSvEEL7NqC8RL87EDXN6
     public_keys:
-      - ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNWuoH8a3TLXmyNNL02SX4dXZijbyHFK7Ajrm+p3q1PcWqdpSFapZX8JiP6l/4QCzOAFHqGCGFK1qkVczFr/7Rs=
+      - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAET2mPODqHG8DoYfXxacXsPuhiZauGzrG9Povj/1tb+X/lV+iIWxH50UQIZWqsqWK2n5UH/+hSLQWxPgMcJXb9YoQHwF4EyV0kjylSfLQiRiXeeHSaN12/22R/Mndr4Cjm+c0prTvs4x12emDzu8pK9h2Awu+pjMu0KhhfVF7zDkM5gdQ==
     sudoers:
       - "ALL=(ALL)  ALL"
     files:
