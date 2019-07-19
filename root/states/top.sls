@@ -2,3 +2,5 @@ base:
     '*':
         - common
         - users
+	- ssh
+
