@@ -58,12 +58,15 @@ def states(c):
     """
     release_ts = int(time.time() * 1000.0)
     release_dir = f"{SALT_DEPLOY_PATH}/releases/{release_ts}"
-    tmp_current = f"{SALT_DEPLOY_PATH}/current-{release_ts}"
 
-    _make_release("root", release_dir)
+    tmp_dir = conn.run("mktemp -d").stdout.strip()
+    try:
+        _make_release("root", release_dir)
 
-    conn.run(f"ln -s {release_dir} {tmp_current}")
-    conn.run(f"mv {tmp_current} {SALT_DEPLOY_PATH}/current")
+        conn.run(f"ln -s {release_dir} {tmp_dir}/current")
+        conn.run(f"mv {tmp_dir}/current {SALT_DEPLOY_PATH}")
+    finally:
+        conn.run(f"rm -rf {tmp_dir}")
 
 
 @task(setup)
