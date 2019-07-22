@@ -19,7 +19,7 @@ SALT_USER = os.getenv("SALT_USER", "salt")
 SALT_DEPLOY_PATH = os.getenv("SALT_DEPLOY_PATH", "/srv/salt")
 SALT_BRANCH = os.getenv("SALT_BRANCH", "master")
 
-conn = fabric.Connection(f"{SALT_USER}@{SALT_MASTER}")
+conn = fabric.Connection(host=SALT_MASTER, user=SALT_USER)
 conn.config.run.echo = True
 conn.config.run.hide = "out"
 conn.config.run.warn = False
@@ -75,7 +75,8 @@ def etc(c):
     Deploy /etc/salt configs and restart daemon
     """
     _make_release("etc", "/etc/salt")
-    conn.sudo("systemctl restart salt-master")
+    conn.sudo("systemctl restart salt-master", pty=True)
+
 
 
 @task
