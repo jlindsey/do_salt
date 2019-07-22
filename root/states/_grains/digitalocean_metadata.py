@@ -25,6 +25,6 @@ def digitalocean():
 
     if metadata.status_code == 200:
         meta = metadata.json()
-        return {"digitalocean": meta, "classes": meta.get("tags", [])}
+        return {"digitalocean": meta, "roles": meta.get("tags", [])}
 
     return {"digitalocean": []}
