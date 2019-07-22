@@ -18,6 +18,7 @@ SALT_REPO = os.getenv("SALT_REPO")
 SALT_USER = os.getenv("SALT_USER", "salt")
 SALT_DEPLOY_PATH = os.getenv("SALT_DEPLOY_PATH", "/srv/salt")
 SALT_BRANCH = os.getenv("SALT_BRANCH", "master")
+SALT_KEEP_RELEASES = os.getenv("SALT_KEEP_RELEASES", 5)
 
 conn = fabric.Connection(host=SALT_MASTER, user=SALT_USER)
 conn.config.run.echo = True
@@ -51,7 +52,33 @@ def setup(c):
         conn.run(f"git fetch --depth 1 origin {SALT_BRANCH}")
 
 
-@task(setup)
+@task
+def prune(c):
+    """
+    Clean up old releases, keeping the value of SALT_KEEP_RELEASES
+    """
+    with conn.cd(f"{SALT_DEPLOY_PATH}/releases"):
+        releases = [
+            d.replace("./", "").strip()
+            for d in conn.run("find . -maxdepth 1 -mindepth 1 -type d", pty=True)
+            .stdout.strip()
+            .split("\n")
+        ]
+        releases.sort()
+
+        diff = len(releases) - int(SALT_KEEP_RELEASES)
+        print(
+            f"Found {len(releases)} current releases; set to keep {SALT_KEEP_RELEASES}"
+        )
+        if diff > 0:
+            to_delete = releases[:diff]
+            print(f"Cleaning up {len(to_delete)} old release(s)")
+            conn.run(f"rm -rf {' '.join(to_delete)}")
+        else:
+            print("Nothing to do")
+
+
+@task(setup, post=[prune])
 def states(c):
     """
     Deploy salt states and modules into /srv/salt
@@ -76,7 +103,6 @@ def etc(c):
     """
     _make_release("etc", "/etc/salt")
     conn.sudo("systemctl restart salt-master", pty=True)
-
 
 
 @task
@@ -110,3 +136,4 @@ def all(c):
     """
     states(c)
     etc(c)
+    prune(c)
