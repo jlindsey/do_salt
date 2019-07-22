@@ -7,11 +7,12 @@ from __future__ import absolute_import
 import io
 import os
 import tarfile
-import time
 
 import fabric
 from invoke import task
 from patchwork import files
+
+from . import utils
 
 SALT_MASTER = os.getenv("SALT_MASTER")
 SALT_REPO = os.getenv("SALT_REPO")
@@ -26,25 +27,15 @@ conn.config.run.hide = "out"
 conn.config.run.warn = False
 
 
-def _make_release(in_repo_path, release_path, strip_components=1):
-    files.directory(conn, release_path)
-    with conn.cd(f"{SALT_DEPLOY_PATH}/repo"):
-        conn.run(
-            f"""git archive {SALT_BRANCH} {in_repo_path} | \\
-                tar -x --strip-components {strip_components} -f - -C {release_path}"""
-        )
-        conn.run(f"git rev-list --max-count=1 {SALT_BRANCH} > {release_path}/REVISION")
-
-
 @task
 def setup(c):
     """
     Prepare the server for deployments
     """
-    files.directory(conn, f"{SALT_DEPLOY_PATH}/repo")
-    files.directory(conn, f"{SALT_DEPLOY_PATH}/releases")
+    files.directory(conn, utils.join(SALT_DEPLOY_PATH, utils.DEPLOY_REPO_DIR))
+    files.directory(conn, utils.join(SALT_DEPLOY_PATH, utils.DEPLOY_RELEASES_DIR))
 
-    with conn.cd(f"{SALT_DEPLOY_PATH}/repo"):
+    with conn.cd(utils.join(SALT_DEPLOY_PATH, utils.DEPLOY_REPO_DIR)):
         if not files.exists(conn, "HEAD"):
             conn.run(f"git clone --mirror --depth 1 --no-single-branch {SALT_REPO} .")
 
@@ -57,7 +48,7 @@ def prune(c):
     """
     Clean up old releases, keeping the value of SALT_KEEP_RELEASES
     """
-    with conn.cd(f"{SALT_DEPLOY_PATH}/releases"):
+    with conn.cd(utils.join(SALT_DEPLOY_PATH, utils.DEPLOY_RELEASES_DIR)):
         releases = [
             d.replace("./", "").strip()
             for d in conn.run("find . -maxdepth 1 -mindepth 1 -type d", pty=True)
@@ -83,17 +74,12 @@ def states(c):
     """
     Deploy salt states and modules into /srv/salt
     """
-    release_ts = int(time.time() * 1000.0)
-    release_dir = f"{SALT_DEPLOY_PATH}/releases/{release_ts}"
-
-    tmp_dir = conn.run("mktemp -d").stdout.strip()
-    try:
-        _make_release("root", release_dir)
-
-        conn.run(f"ln -s {release_dir} {tmp_dir}/current")
-        conn.run(f"mv {tmp_dir}/current {SALT_DEPLOY_PATH}")
-    finally:
-        conn.run(f"rm -rf {tmp_dir}")
+    release_dir = utils.new_release(
+        conn, deploy_root=SALT_DEPLOY_PATH, in_repo_path="root", branch=SALT_BRANCH
+    )
+    utils.promote_release_to_current(
+        conn, deploy_root=SALT_DEPLOY_PATH, release_dir=release_dir
+    )
 
 
 @task(setup)
@@ -101,7 +87,13 @@ def etc(c):
     """
     Deploy /etc/salt configs and restart daemon
     """
-    _make_release("etc", "/etc/salt")
+    utils.new_release(
+        conn,
+        deploy_root=SALT_DEPLOY_PATH,
+        in_repo_path="etc",
+        release_path="/etc/salt",
+        branch=SALT_BRANCH,
+    )
     conn.sudo("systemctl restart salt-master", pty=True)
 
 
@@ -116,17 +108,16 @@ def gpg(c):
     tf.close()
     buf.seek(0)
 
-    try:
-        remote_tmp_dir = conn.run("mktemp -d").stdout.strip()
-        upload_path = f"{remote_tmp_dir}/gpgkeys.tar"
+    with utils.remote_tmp_dir(conn) as tmp_dir:
+        upload_path = utils.join(tmp_dir, "gpgkeys.tar")
 
         with conn.sftp() as sftp:
-            sftp.putfo(buf, upload_path)
+            try:
+                sftp.putfo(buf, upload_path)
+            finally:
+                buf.close()
 
         conn.run(f"tar -xf {upload_path} -C /etc/salt")
-    finally:
-        buf.close()
-        conn.run(f"rm -rf {remote_tmp_dir}")
 
 
 @task(setup, default=True)
