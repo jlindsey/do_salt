@@ -24,6 +24,7 @@ def digitalocean():
     metadata = requests.get(do_svr)
 
     if metadata.status_code == 200:
-        return {"digitalocean": metadata.json()}
+        meta = metadata.json()
+        return {"digitalocean": meta, "classes": meta.get("tags", [])}
 
     return {"digitalocean": []}
