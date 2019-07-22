@@ -7,3 +7,5 @@
         - pkgs:
             - wireguard-dkms
             - wireguard-tools
+        - require:
+            - pkgrepo: .wireguard
