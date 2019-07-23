@@ -23,6 +23,8 @@
         {%- endfor %}
     service.running:
         - enable: true
+        - watch:
+            - file: .wireguard
         - names:
         {%- for dev in salt['pillar.get']('wireguard:interfaces', {}).keys() %}
             - wg-quick@{{ dev }}
