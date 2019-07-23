@@ -1,6 +1,6 @@
 #!stateconf yaml . jinja
 
-{% from "wireguard/map.jinja" import ip_forward, interfaces, defaults with context %}
+{% from "wireguard/map.jinja" import vars, interfaces, defaults with context %}
 
 .wireguard:
     pkgrepo.managed:
@@ -22,11 +22,11 @@
             - /etc/wireguard/{{ interface }}.conf:
                 {%- set config = salt['pillar.get']('wireguard:interfaces:%s'%interface, defaults, merge=true) %}
                 {%- if config['gateway'] %}
-                    {%- set ip_forward = true %}
+                    {%- set vars.ip_forward = true %}
                 {%- endif %}
                 - context: {{ config }}
         {%- endfor %}
-    {%- if ip_forward %}
+    {%- if vars.ip_forward %}
     sysctl.present:
         - name: net.ipv4.ip_forward
         - value: 1
