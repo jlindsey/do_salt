@@ -4,6 +4,7 @@ wireguard:
     local_public_key: umpmY7B7kOiL2utmRuqKieLpBOSlfWP0k7cxajTczFA=
     local_interface_addr: 172.16.16.4/32
     port: 51820
+    gateway: false
     shared_secret: |
       -----BEGIN PGP MESSAGE-----
       Version: GnuPG v2

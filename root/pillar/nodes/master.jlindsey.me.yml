@@ -3,6 +3,7 @@ wireguard:
   interfaces:
     wg0:
       address: 172.16.16.1/24
+      gateway: private
       private_key: |
         -----BEGIN PGP MESSAGE-----
         Version: GnuPG v2
