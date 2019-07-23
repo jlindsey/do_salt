@@ -18,8 +18,8 @@
         - names:
         {%- for dev, config in salt['pillar.get']('wireguard:interfaces', {}).items() %}
             - /etc/wireguard/{{ dev }}.conf:
-                - context:
-                    config: {{ {**salt['pillar.get']('wireguard:defaults'), **config} }}
+                {%- set ctx = {**salt['pillar.get']('wireguard:defaults'), **config} %}
+                - context: {{ ctx }}
         {%- endfor %}
     service.running:
         - enable: true
