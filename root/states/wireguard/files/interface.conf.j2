@@ -3,3 +3,8 @@ Address = {{ address }}
 SaveConfig = true
 ListenPort = {{ port }}
 PrivateKey = {{ private_key }}
+
+[Peer]
+PublicKey = {{ local_public_key }}
+PreSharedKey = {{ shared_secret }}
+AllowedIPs = {{ local_interface_addr }}
