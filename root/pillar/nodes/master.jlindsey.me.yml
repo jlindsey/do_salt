@@ -1,0 +1,25 @@
+---
+wireguard:
+  interfaces:
+    wg0:
+      address: 172.16.16.1/24
+      private_key: |
+        -----BEGIN PGP MESSAGE-----
+        Version: GnuPG v2
+
+        hQIMA4StMYXy+9JEAQ//SK6SZDzaRYu4ETVNPk6C2a/eDDWhzbu3oHIuZrHilbXa
+        Ol7gLPmyjybcjWwCsaGVTPQ40jRlmhrx8GqKEsN7ZPELos+c9sQGd9/Mki/jWtsg
+        qbo26h21nDw+M0iyABWX+kj6kSJlt6oEhpL+07Jvyu7lr8bDnlAvnBBYmt4vvCGh
+        HUyRzaYvFqwLpbmDFn5BmudEIQl2BG56L5ggBmqXuY/b5RLZK2Wx6BYAo7oe/QMZ
+        uYljeUYTbuxn2tt8YIsKFi5o5IexofvrVGeH3JcrmOXT9KU0vKHO0gLSB/HfbOec
+        djLRRB4cKC1S1awsxMmdzLnRQhDbwnun5mq7FuiPJud8DNg9hphMcpcuTTiHtEja
+        tSQ2VTS9rsfJPIcFfs7DA2CaOzSpT8Cbsuk0huBTmL351KsHRj7uKF1pRCMzhTD9
+        SMGjd2nvIGUkCDVkBcywR4Gvtiu/g8qTgcQ5ziXBuoGVS4U99FQG6vrdPvABDSah
+        u8eN0M0mdcOsMv1bzwxbZacomQbOEungRn83Wni/ZIA6RnMf5g0y6hrnJnhhCvqk
+        ejTHo2/ehI6oetL1Cb8end1uPcbBn0uZVvrH/gnb9jO0LAKxekpC6HETC6mjEgdb
+        DZva4SdlDcGhUKmN4uWRqQqSqjkXlG9ooJSvtMsQn89f/V668a/aHu2T3A7mmsfS
+        aAFXaUyeqbGzVVgdYvyWE/hFgwEVa3f9M/ydVEj5VOx2+Nzz20QhtgY/F+AULh/w
+        BHU0G2HqNj3cfCJtwS/NuuLhNzfx5TAVn1GPCYi42SJToqNrgBODSLaoVn6kLMDu
+        U5m2ziIHJsNM
+        =N3n+
+        -----END PGP MESSAGE-----

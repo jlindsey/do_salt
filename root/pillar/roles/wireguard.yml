@@ -1,0 +1,26 @@
+---
+wireguard:
+  defaults:
+    local_public_key: umpmY7B7kOiL2utmRuqKieLpBOSlfWP0k7cxajTczFA=
+    local_interface_addr: 172.16.16.4/32
+    port: 51820
+    shared_secret: |
+      -----BEGIN PGP MESSAGE-----
+      Version: GnuPG v2
+
+      hQIMA4StMYXy+9JEAQ/+NvPcO+ZKRxw2jl8Znkr2GD/ZfBdS9TlH+4/5ZykJ5vrq
+      UcTZvyJfgOLxhHPeRMCMU5Z5mqtKV9uKLFwzGqPiIkzIFu3RQFZuTOf5VKJuoa/c
+      /NLeBT+DoJFbvYMUR6tfcZfqttwmsJYYlvbOMbBJJxoBLiqX//fKeKaykCax75Ax
+      XPN8r5DrG8qXyF2aIAHnZL5+3ixYXQ5+VRAA8Izm9vQ6Q15eaFiTWgH7R0ngnf61
+      /7AdKvwEQ/U3Zp8XhN1jO8plu8Fap6cjM3O5Byt0p6mTG/3BOi8MsBTHZxCXNbUA
+      Dxnynfxua2NA550FpdEQF8zs9690fWzjIC+uFsaiFShK4mEj/U/DCWgG6My1DVLW
+      IiW7LgsIpxyNiseI6aOY0gRRkWt0JD3NVU9L6ggXrYyfghI2wnwqRoFDP3Igzv1R
+      Rs40FJfhRa+3t94PROeZpMayIWx9RIUeY1YF23Mi0E8A2V+Te+s1B1n7gm9AV5z5
+      BXKL68moxbrNzEyJ7K5QaUt8DvOkFwdR7uzNUws2iddPjIIYGyQp9i8ewd3qYH7w
+      BKfm1y6Bh6KQimms/MkbSup7hyRXlQWkUHZu1o5UjtXd6NmdjIFvJkTMsJIYCODs
+      Knlc03JtFuAySopmMAb7H2VjSunNSpBovDtVsqC2ht53MAunSZpI+eRC/BxCiVPS
+      aAGa1ITB0gVfG6FVt7ETJXKMiM+N+hJRCgqIyBb2LHVP0iGHSCI9/J7dAqU79DZX
+      lXvMYpAKywwWCHIbSBY2H0HXkaoMBURJbuTRXPhfH0ohuhXjDC0OajqdojLPCWSO
+      ugscNUsZWWsa
+      =ZGdF
+      -----END PGP MESSAGE-----
