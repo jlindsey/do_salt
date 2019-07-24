@@ -2,6 +2,11 @@
 
 {% from "wireguard/map.jinja" import vars, interfaces, defaults with context %}
 
+.forward_drop:
+    iptables.set_policy:
+        - chain: FOWARD
+        - policy: DROP
+
 .wireguard:
     pkgrepo.managed:
         - ppa: wireguard/wireguard
