@@ -5,6 +5,9 @@ PrivateKey = {{ private_key }}
 {%- if gateway == 'private' %}
 PostUp = iptables -A FORWARD -i %i -d 10.0.0.0/8 -j ACCEPT; iptables -A FORWARD -i %i -d {{ address }} -j ACCEPT; iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
 PreDown = iptables -D FORWARD -i %i -d 10.0.0.0/8 -j ACCEPT; iptables -D FORWARD -i %i -d {{ address }} -j ACCEPT; iptables -t nat -D POSTROUTING -o eth1 -j MASQUERADE
+{%- elif gateway == 'public' %}
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+PreDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth1 -j MASQUERADE
 {%- endif %}
 
 [Peer]
