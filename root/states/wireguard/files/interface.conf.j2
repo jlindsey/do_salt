@@ -4,7 +4,7 @@ ListenPort = {{ port }}
 PrivateKey = {{ private_key }}
 {%- if gateway == 'private' %}
 PostUp = iptables -A FORWARD -i %i -d 10.0.0.0/8 -d {{ address }} -j ACCEPT; iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
-PostDown = iptables -D FORWARD -i %i -d 10.0.0.0/8 -d {{ address }}-j ACCEPT; iptables -t nat -D POSTROUTING -o eth1 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -d 10.0.0.0/8 -d {{ address }} -j ACCEPT; iptables -t nat -D POSTROUTING -o eth1 -j MASQUERADE
 {%- endif %}
 
 [Peer]
