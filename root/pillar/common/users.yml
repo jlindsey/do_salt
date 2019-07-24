@@ -4,7 +4,7 @@ users:
     shell: /usr/bin/zsh
     password: $5$5dcdc07c2e193015$X4l4xNEPvuvZcH.n9t3o4LYNSvEEL7NqC8RL87EDXN6
     public_keys:
-      - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAET2mPODqHG8DoYfXxacXsPuhiZauGzrG9Povj/1tb+X/lV+iIWxH50UQIZWqsqWK2n5UH/+hSLQWxPgMcJXb9YoQHwF4EyV0kjylSfLQiRiXeeHSaN12/22R/Mndr4Cjm+c0prTvs4x12emDzu8pK9h2Awu+pjMu0KhhfVF7zDkM5gdQ==
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDwVPDBN7rZzzhLLG2scnj/OlDI2wupMQqIVeZmmhswiMFeoRhZtXmd66AMXov4B/xbo1nyo1Z3AVRbPKZnMhPtUE9CzK18u88TWnUWDcyybT5Ba0hv9S3/yRsRPX/qKaYDeHix4ennxkjAmXfq0nfIjpy7tVzXflMXNM4DTm+DXR79XDIbqlVSFVUp9q+eYtBocPGplKnBnV3NHoT0VKy4WSLNQITUBxyAYQwkMgrGhwa3rmzcsQA7KeHhNKj6WrQWzB4sPtI2cjth+Wm/6VHz2RmybvurA6DyAnMA6j+SHIn/kdWstx8pDlU+udIvOyU+mG3YvyKWCFdamXzb6oGCuwI+hwesIL616D5giLQUAWjg7LZjTK4aVyym8PxV5YSEuFzVst5Cq+K50hk/9K29E0FsD9PZDhYfzOm/NeeKDHDhhka9SOSd/0IqCNUFLL/DX2RESZEbXv+vt73okoMSeugeOST+F2sLu9jufi2uScC4vEhD6B/MPQHv3vXWjtg/pRwnp+OFrtLW8m7b5qgdtr6n0e9wuuiy9eE7S6va01F5NA9/68+Ut2kXixvaIYs9LmQvusvWHFmlQRf4HJ8rA5DI3XQQa8r9hGMgzAD5JLbn5dXZQLrNQROTsIO8puIC3tEJHxfR6wOfppdlf4rBExClExY4Bz0KUhFxx7Edqw==
     sudoers:
       - "ALL=(ALL)  ALL"
     files:
