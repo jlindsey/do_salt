@@ -4,7 +4,7 @@
 
 .forward_drop:
     iptables.set_policy:
-        - chain: FOWARD
+        - chain: FORWARD
         - policy: DROP
 
 .wireguard:
