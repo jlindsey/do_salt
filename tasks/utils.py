@@ -21,8 +21,8 @@ def join(*parts):
 
 @contextmanager
 def remote_tmp_dir(conn):
+    tmp_dir = conn.run("mktemp -d").stdout.strip()
     try:
-        tmp_dir = conn.run("mktemp -d").stdout.strip()
         yield tmp_dir
     finally:
         conn.run(f"rm -rf {tmp_dir}")
