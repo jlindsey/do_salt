@@ -1,5 +1,5 @@
 Defaults env_reset
-Defaults requiretty,use_pty
+Defaults !visiblepw
 Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 root ALL=(ALL) NOPASSWD:ALL
