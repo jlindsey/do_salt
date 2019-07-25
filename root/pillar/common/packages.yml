@@ -6,3 +6,4 @@ packages:
   - unzip
   - git
   - haveged
+  - auditd
