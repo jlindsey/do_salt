@@ -1,0 +1,4 @@
+{% set version = salt['pillar.get']('consul:version') %}
+{% set config = salt['pillar.get']('consul:config') %}
+{% set services = salt['pillar.get']('consul:services', {}) %}
+{% set checks = salt['pillar.get']('consul:checks', {}) %}

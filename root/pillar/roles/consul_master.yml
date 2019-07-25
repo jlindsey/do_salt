@@ -1,0 +1,30 @@
+---
+consul:
+  config:
+    ui: true
+    bootstrap_expect: 1
+    server: true
+    addresses:
+      http: 0.0.0.0
+    acl:
+      tokens:
+        master: |
+          -----BEGIN PGP MESSAGE-----
+          Version: GnuPG v2
+
+          hQIMA4StMYXy+9JEAQ/+LZ/rRcafVevD2r1ktudj9YfmajRKIzHooXxh5/OGI+Ab
+          IaS54EuEnMKx7lVyMaV8V3lP/Ohy17Um941avHMn4WG01QrxVijdw9zjk/3bhRE0
+          2D/JslmvdVHsYGc0P+WZZ0XePDHQ239BuqdLrssrWEZYQzv8KVzapLcmHSINu+jU
+          SIB981A4C91MVRHdOSqrAVTk0J3mOibC9lGQie9M3hv6RjRp3iw392tacPmxem6j
+          1fsX6NwfJMbGKzKqqMZNRB+eB6pJ+On2dkDtCc1ZjOkadHsp+JyRfkzF3xdr2+mh
+          P+/BLUJurYPFDsWkjFa5l8J5ut122ftCIY9khUooiRJCLz34wFBLqNzlHqTOWZC1
+          0zqWKIZXTzolOgXzmWnMEQpuETKq/OdXYEUO4sbFC3SR+aUBIYm6K8OesfMVqIcU
+          FwdbJDyEqi0xb5GfoKh/34YBfEVnIrv0Po7cu1nBbkLSxfyz7JbgcxQ1QNqF+S0q
+          fGSudNWqEKRhx5pBp6B+1NpEuTH014/bUYgF/pA1r4YVvyEpnZe7SiXGDz4he2Ub
+          jVP5Cs2emkT/qneKml2S0EM01cEW8h47t4z7PKB1zVU6gfQJ5CjDo0dBIzDfc9/c
+          Vwfh7mbAVEh5EU2TbfHtmDsZ+mfhjTTuHn4asw10CrH5MG10lURvyE/Z+dKmVY3S
+          YAFsulaZwWSvuCv4aZgZ2kWA6Ecy4XR0UsUfXpnbCZ8mNWRUXu3vvR8kmE/pnX9b
+          pNEdt+Aviw7bv9GvQf+UgIUxsTLQd+5CPM/9sLCoN+mpjrGYAD+vQ2W616cfycDW
+          DA==
+          =3Hpi
+          -----END PGP MESSAGE-----

@@ -33,3 +33,7 @@ consul:
       UaxGsMukvdQBduIeRVYtT94aHO6NHrjRogHMkz3DvpQl
       =gcjv
       -----END PGP MESSAGE-----
+    acl:
+      enabled: true
+      default_policy: deny
+      down_policy: extend-cache
