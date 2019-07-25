@@ -1,6 +1,6 @@
 #!stateconf yaml . jinja
 
-{% from "consul/map.jinja" import config, version with context %}
+{% from "consul/map.jinja" import config, services, checks, version with context %}
 
 .extract_and_install:
     archive.extracted:
