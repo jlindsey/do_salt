@@ -2,6 +2,9 @@
 
 {% from "wireguard/map.jinja" import vars, interfaces, defaults with context %}
 
+include:
+    - harden.network
+
 .forward_drop:
     iptables.set_policy:
         - chain: FORWARD

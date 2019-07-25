@@ -1,4 +1,3 @@
-
 {% set vars = namespace(ip_forward=false) %}
 {% set defaults = salt['pillar.get']('wireguard:defaults', {}) %}
 {% set interfaces = salt['pillar.keys']('wireguard:interfaces') %}
