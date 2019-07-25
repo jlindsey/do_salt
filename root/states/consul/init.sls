@@ -43,3 +43,16 @@
             - /etc/consul.d/check-{{ name }}.json:
                 - dataset: {{ data }}
             {%- endfor %}
+
+.setup_service:
+    file.managed:
+        - name: /etc/systemd/system/consul.service
+        - mode: 644
+        - source: salt://consul/files/consul.service
+    service.running:
+        - name: consul
+        - enable: true
+        - watch_any:
+            - file: .setup_service
+            - file: .set_current
+            - file: .config

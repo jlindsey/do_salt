@@ -6,3 +6,5 @@ base:
         - consul
     G@roles:wireguard:
         - wireguard
+    G@roles:nomad_agent:
+        - consul.link_local
