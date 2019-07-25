@@ -18,7 +18,7 @@
 .set_current:
     file.symlink:
         - name: /usr/local/bin/consul
-        - source: /usr/local/bin/consul-{{ version }}
+        - target: /usr/local/bin/consul-{{ version }}
 
 .config_dir:
     file.directory:
