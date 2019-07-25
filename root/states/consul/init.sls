@@ -52,7 +52,7 @@
     service.running:
         - name: consul
         - enable: true
-        - watch_any:
+        - watch:
             - file: .setup_service
             - file: .set_current
             - file: .config
