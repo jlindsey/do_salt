@@ -7,3 +7,4 @@ packages:
   - git
   - haveged
   - auditd
+  - audispd-plugins
