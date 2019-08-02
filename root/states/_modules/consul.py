@@ -3,7 +3,7 @@ Exec module for various consul operations
 """
 
 import os
-from functools import lru_cache, partial
+from functools import partial
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests
@@ -11,15 +11,6 @@ import requests
 
 CONSUL_DEFAULT_HOST = "http://127.0.0.1:8500"
 CONSUL_DEFAULT_TOKEN = None
-
-
-def _clears_policy_cache(f):
-    def wrap(*args, **kwargs):
-        ret = f(*args, **kwargs)
-        all_policies.clear_cache()
-        return ret
-
-    return wrap
 
 
 def _get_connection_params(
@@ -73,7 +64,6 @@ def _get_connection_params(
     return (host, token)
 
 
-@lru_cache(maxsize=8)
 def get_session(host: Optional[str], token: Optional[str]) -> requests.Session:
     """
     Instantiates a new requests Session object from the host and token.
@@ -110,7 +100,6 @@ def get_session(host: Optional[str], token: Optional[str]) -> requests.Session:
     return s
 
 
-@lru_cache(maxsize=2)
 def all_policies(consul_host: str, consul_token: str) -> List[Dict[str, Any]]:
     """
     Returns a list of all policies from consul.
@@ -143,7 +132,6 @@ def policy_from_name(
     return policy.pop() if policy else None
 
 
-@_clears_policy_cache
 def create_update_policy(
     name: str,
     rules: str,
@@ -209,7 +197,6 @@ def create_update_policy(
     return (True, changes)
 
 
-@_clears_policy_cache
 def delete_policy(
     name: str, consul_host: Optional[str] = None, consul_token: Optional[str] = None
 ) -> Dict[str, str]:
