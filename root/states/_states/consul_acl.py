@@ -9,7 +9,7 @@ def manage_policy(name, description, rules, consul_host=None, consul_token=None)
     ret = {"name": name, "result": True, "changes": {}, "comment": ""}
 
     if __opts__["test"]:
-        existing = __salt__["consul.policy_from_name"](name, session)
+        existing = __salt__["consul.policy_from_name"](name, consul_host, consul_token)
         if existing:
             if existing["Rules"] == rules and existing["Description"] == description:
                 ret["result"] = True
@@ -33,6 +33,6 @@ def manage_policy(name, description, rules, consul_host=None, consul_token=None)
             ret["comment"] = f"Policy {name} updated"
     except Exception as e:
         ret["result"] = False
-        ret["comment"] = f"Error updating or creating policy: {e}"
+        ret["comment"] = f"Error updating or creating policy: {e.__repr__()}"
 
     return ret
