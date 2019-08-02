@@ -4,8 +4,6 @@ Manages Consul ACL objects: policies, roles, and tokens
 
 
 def manage_policy(name, description, rules, consul_host=None, consul_token=None):
-    session = __salt__["consul.get_session"](consul_host, consul_token)
-
     ret = {"name": name, "result": True, "changes": {}, "comment": ""}
 
     if __opts__["test"]:
