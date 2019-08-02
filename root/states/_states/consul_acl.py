@@ -3,8 +3,8 @@ Manages Consul ACL objects: policies, roles, and tokens
 """
 
 
-def manage_policy(name, description, rules, host=None, token=None):
-    session = __salt__["consul.get_session"](host, token)
+def manage_policy(name, description, rules, consul_host=None, consul_token=None):
+    session = __salt__["consul.get_session"](consul_host, consul_token)
 
     ret = {"name": name, "result": True, "changes": {}, "comment": ""}
 
@@ -21,7 +21,11 @@ def manage_policy(name, description, rules, host=None, token=None):
 
     try:
         created, ret["changes"] = __salt__["consul.create_update_policy"](
-            name=name, description=description, rules=rules, host=host, token=token
+            name=name,
+            description=description,
+            rules=rules,
+            consul_host=consul_host,
+            consul_token=consul_token,
         )
         if created:
             ret["comment"] = f"Policy {name} created"
