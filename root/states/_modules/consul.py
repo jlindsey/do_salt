@@ -22,20 +22,7 @@ def _clears_policy_cache(f):
     return wrap
 
 
-def _with_session(f):
-    def wrap(*args, **kwargs):
-        if kwargs.get("session", None) is None:
-            host = kwargs.get("host", None)
-            token = kwargs.get("token", None)
-
-            kwargs["session"] = get_session(*get_connection_params(host, token))
-
-        return f(*args, **kwargs)
-
-    return wrap
-
-
-def get_connection_params(
+def _get_connection_params(
     host: Optional[str] = None, token: Optional[str] = None
 ) -> Tuple[str, str]:
     """
@@ -87,7 +74,7 @@ def get_connection_params(
 
 
 @lru_cache(maxsize=8)
-def get_session(host: str, token: str) -> requests.Session:
+def get_session(host: Optional[str], token: Optional[str]) -> requests.Session:
     """
     Instantiates a new requests Session object from the host and token.
 
@@ -104,10 +91,11 @@ def get_session(host: str, token: str) -> requests.Session:
         A `requests.Session` object
     """
 
-    # Ensure the URL ends with a single / so urljoin doesn't
-    # eat part of the pathname
-    host = host.rstrip("/") + "/"
+    host, token = _get_connection_params(host, token)
 
+    # Ensure the URL ends with a single / so urljoin doesn't
+    # eat part of the pathname, and append the api path if missing
+    host = host.rstrip("/") + "/"
     if "/v1/" not in host:
         host = host + "v1/"
 
@@ -115,7 +103,7 @@ def get_session(host: str, token: str) -> requests.Session:
         return f(method, host + url, *args, **kwargs)
 
     s = requests.Session()
-    if token is not None:
+    if token:
         s.headers.update({"X-Consul-Token": token})
     s.request = partial(new_req, host, s.request)
 
@@ -123,21 +111,20 @@ def get_session(host: str, token: str) -> requests.Session:
 
 
 @lru_cache(maxsize=2)
-def all_policies(session: requests.Session) -> List[Dict[str, Any]]:
+def all_policies(consul_host: str, consul_token: str) -> List[Dict[str, Any]]:
     """
     Returns a list of all policies from consul.
 
     See: https://www.consul.io/api/acl/policies.html#list-policies
     """
 
-    resp = session.get("acl/policies")
+    resp = get_session(consul_host, consul_token).get("acl/policies")
     resp.raise_for_status()
     return resp.json()
 
 
-@_with_session
 def policy_from_name(
-    name: str, session: requests.Session = None, **kwargs
+    name: str, consul_host: str, consul_token: str
 ) -> Optional[Dict[str, Any]]:
     """
     Fetches a policy detail object of the given name.
@@ -148,19 +135,21 @@ def policy_from_name(
     See: https://www.consul.io/api/acl/policies.html#read-a-policy
     """
 
-    policy = [p for p in all_policies(session) if p["Name"] == name]
+    policy = [
+        p
+        for p in all_policies(get_session(consul_host, consul_token))
+        if p["Name"] == name
+    ]
     return policy.pop() if policy else None
 
 
-@_with_session
 @_clears_policy_cache
 def create_update_policy(
     name: str,
     rules: str,
     description: Optional[str] = None,
-    session: requests.Session = None,
-    *args,
-    **kwargs,
+    consul_host: Optional[str] = None,
+    consul_token: Optional[str] = None,
 ) -> Tuple[bool, Dict[str, str]]:
     """
     Creates or updates a Consul ACL policy.
@@ -182,7 +171,9 @@ def create_update_policy(
         created (true) or updated (false), and the second is a changes dict suitable
         for salt state returns.
     """
-    existing = policy_from_name(name, session)
+    session = get_session(consul_host, consul_token)
+
+    existing = policy_from_name(name, consul_host, consul_token)
 
     if existing:
         # Update
@@ -218,10 +209,9 @@ def create_update_policy(
     return (True, changes)
 
 
-@_with_session
 @_clears_policy_cache
 def delete_policy(
-    name: str, session: requests.Session = None, *args, **kwargs
+    name: str, consul_host: Optional[str] = None, consul_token: Optional[str] = None
 ) -> Dict[str, str]:
     """
     Ensures a policy does not exist with a given name.
@@ -232,11 +222,11 @@ def delete_policy(
     Returns:
         A changes dict suitable for salt state returns
     """
-    policy = policy_from_name(name)
+    policy = policy_from_name(name, consul_host, consul_token)
     if policy is None:
         return {}
 
-    resp = session.delete(f"acl/policy/{policy['ID']}")
+    resp = get_session(consul_host, consul_token).delete(f"acl/policy/{policy['ID']}")
     resp.raise_for_status()
     return {
         "id": {"old": policy["ID"], "new": ""},
