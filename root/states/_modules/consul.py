@@ -2,13 +2,11 @@
 Exec module for various consul operations
 """
 
-import logging
 import os
 from functools import partial
 
 import requests
 
-log = logging.getLogger(__name__)
 
 CONSUL_DEFAULT_HOST = "http://127.0.0.1:8500"
 CONSUL_DEFAULT_TOKEN = None
@@ -109,7 +107,6 @@ def all_policies(consul_host, consul_token):
     resp = get_session(consul_host, consul_token).get("acl/policies")
     resp.raise_for_status()
     json = resp.json()
-    log.debug("Got policies: %s", json)
     return json
 
 
@@ -124,8 +121,14 @@ def policy_from_name(name, consul_host, consul_token):
     """
 
     policy = [p for p in all_policies(consul_host, consul_token) if p["Name"] == name]
-    log.debug("Got policies matching name %s: %s", name, policy)
-    return policy.pop() if policy else None
+    if not policy:
+        return None
+
+    policy = policy.pop()
+    policy_id = policy["ID"]
+    resp = get_session(consul_host, consul_token).get(f"acl/policy/{policy_id}")
+    resp.raise_for_status()
+    return resp.json()
 
 
 def create_update_policy(name, rules, description, consul_host, consul_token):
@@ -155,9 +158,7 @@ def create_update_policy(name, rules, description, consul_host, consul_token):
 
     if existing:
         # Update
-        log.debug("consul policy %s: existing policy", name)
         if existing["Rules"] == rules and existing["Description"] == description:
-            log.debug("consul policy %s: no update needed", name)
             return (False, {})  # No changes
 
         resp = session.put(
