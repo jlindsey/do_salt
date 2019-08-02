@@ -5,7 +5,6 @@ Exec module for various consul operations
 import logging
 import os
 from functools import partial
-from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 
@@ -15,9 +14,7 @@ CONSUL_DEFAULT_HOST = "http://127.0.0.1:8500"
 CONSUL_DEFAULT_TOKEN = None
 
 
-def _get_connection_params(
-    host: Optional[str] = None, token: Optional[str] = None
-) -> Tuple[str, str]:
+def _get_connection_params(host, token):
     """
     Fetches the Consul connection string and API token to use.
 
@@ -66,7 +63,7 @@ def _get_connection_params(
     return (host, token)
 
 
-def get_session(host: Optional[str], token: Optional[str]) -> requests.Session:
+def get_session(host, token):
     """
     Instantiates a new requests Session object from the host and token.
 
@@ -102,7 +99,7 @@ def get_session(host: Optional[str], token: Optional[str]) -> requests.Session:
     return s
 
 
-def all_policies(consul_host: str, consul_token: str) -> List[Dict[str, Any]]:
+def all_policies(consul_host, consul_token):
     """
     Returns a list of all policies from consul.
 
@@ -116,9 +113,7 @@ def all_policies(consul_host: str, consul_token: str) -> List[Dict[str, Any]]:
     return json
 
 
-def policy_from_name(
-    name: str, consul_host: str, consul_token: str
-) -> Optional[Dict[str, Any]]:
+def policy_from_name(name, consul_host, consul_token):
     """
     Fetches a policy detail object of the given name.
 
@@ -133,13 +128,7 @@ def policy_from_name(
     return policy.pop() if policy else None
 
 
-def create_update_policy(
-    name: str,
-    rules: str,
-    description: Optional[str] = None,
-    consul_host: Optional[str] = None,
-    consul_token: Optional[str] = None,
-) -> Tuple[bool, Dict[str, str]]:
+def create_update_policy(name, rules, description, consul_host, consul_token):
     """
     Creates or updates a Consul ACL policy.
 
@@ -200,9 +189,7 @@ def create_update_policy(
     return (True, changes)
 
 
-def delete_policy(
-    name: str, consul_host: Optional[str] = None, consul_token: Optional[str] = None
-) -> Dict[str, str]:
+def delete_policy(name, consul_host, consul_token):
     """
     Ensures a policy does not exist with a given name.
 
