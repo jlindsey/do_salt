@@ -124,11 +124,7 @@ def policy_from_name(
     See: https://www.consul.io/api/acl/policies.html#read-a-policy
     """
 
-    policy = [
-        p
-        for p in all_policies(get_session(consul_host, consul_token))
-        if p["Name"] == name
-    ]
+    policy = [p for p in all_policies(consul_host, consul_token) if p["Name"] == name]
     return policy.pop() if policy else None
 
 
