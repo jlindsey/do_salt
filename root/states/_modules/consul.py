@@ -137,7 +137,7 @@ def all_policies(session: requests.Session) -> List[Dict[str, Any]]:
 
 @_with_session
 def policy_from_name(
-    name: str, session: requests.Session, **kwargs
+    name: str, session: requests.Session = None, **kwargs
 ) -> Optional[Dict[str, Any]]:
     """
     Fetches a policy detail object of the given name.
