@@ -322,11 +322,9 @@ def create_update_token(
 
     params = {"AccessorID": accessor, "SecretID": secret, "Description": description}
     if policies:
-        params["Policies"] = {"Name": policy for policy in policies}
+        params["Policies"] = [{"Name": policy} for policy in policies]
     if roles:
-        params["Roles"] = {"Name": role for role in roles}
-
-    log.debug("params: %s", params)
+        params["Roles"] = [{"Name": role} for role in roles]
 
     session = get_session(consul_host, consul_token)
 
