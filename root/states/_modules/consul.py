@@ -18,9 +18,6 @@ NAMESPACE_CONSUL = uuid.uuid5(
     uuid.UUID("00000000-0000-0000-0000-000000000000"), "consul"
 )
 
-# Do some nonsense so jedi stops complaining about salt injected vars
-__salt__ = __salt__ or {}
-
 
 def _get_connection_params(host, token):
     """
