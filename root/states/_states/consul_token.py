@@ -2,10 +2,6 @@
 Manages Consul ACL tokens
 """
 
-# Do some nonsense so jedi stops complaining about salt injected vars
-__opts__ = __opts__ or {}
-__salt__ = __salt__ or {}
-
 
 def manage(
     name, secret, consul_host, consul_token, description=None, policies=[], roles=[]
