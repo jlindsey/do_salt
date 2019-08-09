@@ -1,6 +1,6 @@
 #!stateconf yaml . jinja
 
-{% from "consul/map.jinja" import tokens with context %}
+{% from "consul/map.jinja" import tokens, managed_tokens, managed_policies with context %}
 
 .salt_token:
     consul_policy.manage:
@@ -19,7 +19,8 @@
         - require:
             - consul_policy: .salt_token
 
-.managed:
+{% if managed_policies %}
+.managed_policies:
     consul_policy.manage:
         - consul_host: http://127.0.0.1:8500
         - consul_token: {{ tokens['salt'] }}
@@ -29,6 +30,10 @@
                 - rules: {{ policy['rules'] }}
                 - description: {{ policy.get('description', none) }}
             {% endfor %}
+{% endif %}
+
+{% if managed_tokens %}
+.managed_tokens:
     consul_token.manage:
         - consul_host: http://127.0.0.1:8500
         - consul_token: {{ tokens['salt'] }}
@@ -40,3 +45,4 @@
                 - policies: {{ token.get('policies', []) }}
                 - roles: {{ token.get('roles', []) }}
             {% endfor %}
+{% endif %}
