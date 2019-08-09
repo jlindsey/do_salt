@@ -2,8 +2,8 @@
 consul:
   version: 1.5.2
 
-  policies: []
-  tokens: []
+  policies: {}
+  tokens: {}
 
   salt_acl_token: |
     Version: GnuPG v2
