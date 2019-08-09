@@ -280,11 +280,12 @@ def token_by_name_or_accessor(consul_host, consul_token, name=None, accessor=Non
 
     session = get_session(consul_host, consul_token)
 
-    resp = session.get(f"acl/token/{accessor}")
-    if resp.status_code == 404:
-        return None
+    resp = session.get("acl/tokens")
     resp.raise_for_status()
-    return resp.json()
+    tokens = resp.json()
+
+    token = [token for token in tokens if token["AccessorID"] == accessor]
+    return None if not token else token[0]
 
 
 def create_update_token(
