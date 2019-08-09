@@ -284,12 +284,20 @@ def token_by_name_or_accessor(consul_host, consul_token, name=None, accessor=Non
 
     session = get_session(consul_host, consul_token)
 
+    # There doesn't seem to be any way to get this without two calls, since
+    # consul returns a 403 instead of 404 when requesting a nonexistant
+    # token accessor ID.
     resp = session.get("acl/tokens")
     resp.raise_for_status()
     tokens = resp.json()
 
-    token = [token for token in tokens if token["AccessorID"] == accessor]
-    return None if not token else token[0]
+    found = [token for token in tokens if token["AccessorID"] == accessor]
+    if not found:
+        return None
+
+    resp = session.get(f"acl/token/{accessor}")
+    resp.raise_for_status()
+    return resp.json()
 
 
 def create_update_token(
@@ -320,7 +328,7 @@ def create_update_token(
         accessor=accessor, consul_host=consul_host, consul_token=consul_token
     )
 
-    params = {"AccessorID": accessor, "SecretID": secret, "Description": description}
+    params = {"AccessorID": accessor, "Description": description}
     if policies:
         params["Policies"] = [{"Name": policy} for policy in policies]
     if roles:
@@ -334,7 +342,6 @@ def create_update_token(
                 "attempting to change a secretID on an existing consul token"
             )
 
-        del params["SecretID"]
         endpoint = f"acl/token/{accessor}"
         created = False
 
@@ -350,6 +357,7 @@ def create_update_token(
     else:
         endpoint = "acl/token"
         created = True
+        params["SecretID"] = secret
         ret = {
             "accessor": {"old": "", "new": accessor},
             "secret": {"old": "", "new": secret},

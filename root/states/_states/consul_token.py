@@ -47,6 +47,6 @@ def manage(
         ret["comment"] = f"Token {name} was {'created' if created else 'updated'}"
     except Exception as e:
         ret["result"] = False
-        ret["comment"] = f"Error updating or creating token: {e}"
+        ret["comment"] = f"Error updating or creating token: {e.__repr__()}"
 
     return ret
