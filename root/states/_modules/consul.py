@@ -2,12 +2,16 @@
 Exec module for various consul operations
 """
 
+import logging
 import os
 import uuid
 from functools import partial
 
 import requests
 from salt import exceptions
+
+
+log = logging.getLogger(__name__)
 
 
 CONSUL_DEFAULT_HOST = "http://127.0.0.1:8500"
@@ -322,6 +326,8 @@ def create_update_token(
     if roles:
         params["Roles"] = {"Name": role for role in roles}
 
+    log.debug("params: %s", params)
+
     session = get_session(consul_host, consul_token)
 
     if existing is not None:
@@ -330,6 +336,7 @@ def create_update_token(
                 "attempting to change a secretID on an existing consul token"
             )
 
+        del params["SecretID"]
         endpoint = f"acl/token/{accessor}"
         created = False
 
