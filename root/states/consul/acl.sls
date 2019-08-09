@@ -12,6 +12,7 @@
     consul_token.manage:
         - name: salt-acl
         - description: Salt ACL management token
+        - secret: {{ salt['pillar.get']('consul:salt_acl_token') }}
         - policies:
             - salt-acl
         - consul_host: http://127.0.0.1:8500
