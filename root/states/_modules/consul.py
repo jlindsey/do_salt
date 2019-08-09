@@ -254,10 +254,16 @@ def token_link_names(token):
         of strings
     """
 
-    return (
-        [policy["Name"] for policy in token["Policies"]],
-        [role["Name"] for role in token["Roles"]],
-    )
+    policies = []
+    roles = []
+
+    if "Policies" in token:
+        policies = [policy["Name"] for policy in token["Policies"]]
+
+    if "Roles" in token:
+        roles = [role["Name"] for role in token["Roles"]]
+
+    return (policies, roles)
 
 
 def token_by_name_or_accessor(consul_host, consul_token, name=None, accessor=None):
