@@ -1,18 +1,42 @@
 #!stateconf yaml . jinja
 
-include:
-    - consul
+{% from "consul/map.jinja" import tokens with context %}
 
-.policies:
-    consul_acl.manage_policy:
+.salt_token:
+    consul_policy.manage:
+        - name: salt-acl
+        - description: Salt ACL management permissions
+        - rules: acl = "write"
+        - consul_host: http://127.0.0.1:8500
+        - consul_token: {{ salt['pillar.get']('consul:config:acl:tokens:master') }}
+    consul_token.manage:
+        - name: salt-acl
+        - description: Salt ACL management token
+        - policies:
+            - salt-acl
         - consul_host: http://127.0.0.1:8500
         - consul_token: {{ salt['pillar.get']('consul:config:acl:tokens:master') }}
         - require:
-            - consul::goal
+            - consul_policy: .salt_token
+
+.managed:
+    consul_policy.manage:
+        - consul_host: http://127.0.0.1:8500
+        - consul_token: {{ tokens['salt'] }}
         - names:
-            - consul-agent-salt:
-                - description: Salt master node agent token policy
-                - rules: |
-                    node "master" {
-                        policy = "write"
-                    }
+            {% for name, policy in salt['pillar.get']('consul:policies', {}).items() %}
+            - {{ name }}:
+                - rules: {{ policy['rules'] }}
+                - description: {{ policy.get('description', none) }}
+            {% endfor %}
+    consul_token.manage:
+        - consul_host: http://127.0.0.1:8500
+        - consul_token: {{ tokens['salt'] }}
+        - names:
+            {% for name, token in salt['pillar.get']('consul:tokens', {}).items() %}
+            - {{ name }}:
+                - description: {{ token['description'] }}
+                - secret: {{ token['secret'] }}
+                - policies: {{ token.get('policies', []) }}
+                - roles: {{ token.get('roles', []) }}
+            {% endfor %}
