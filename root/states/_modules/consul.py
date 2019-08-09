@@ -235,7 +235,7 @@ def token_accessor_from_name(name):
         A UUIDv5 namespaced to consul
     """
 
-    return uuid.uuid5(NAMESPACE_CONSUL, name)
+    return str(uuid.uuid5(NAMESPACE_CONSUL, name))
 
 
 def token_link_names(token):
