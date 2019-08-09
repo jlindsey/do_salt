@@ -1,6 +1,30 @@
 ---
 consul:
   version: 1.5.2
+
+  policies: []
+  tokens: []
+
+  salt_acl_token: |
+    Version: GnuPG v2
+
+    hQIMA4StMYXy+9JEAQ/9GsQtR9ev08+DuBa22a50whAAbzCl6vBxl2AnSKXA5GDN
+    wnrad5lVS35eZ4Qv5QWhU+SXYGKFPR6yhAcCsGqQIdS0Jtpw3DIfZjPB3AOneSNh
+    p2M24zLk2sLfpKvhmadg4+Yva9rxaADThSvujwx3LNGSg6c6pp2x0AVNtfb8Ogml
+    ZqFCTFFm96tzDGut50HU23eDa6a6OQ7fEg9J8A9CHqSf3f459UbLGSLcWR+ENwiX
+    l96amx7OXJ+JYELMWKLbdK+bJXlBcxBtF2lelxQKxqCA3G8X4IsY9ibM4yM3aI0u
+    m8jR87mfVqf6V4UNu4IvMtiL59GwpJVl82FzleKJL9mfHvOf0joCZ+Aye89H+SxA
+    Jr7pBu+QsIrE8W99J+ZK9vX1v9ka700ki+vBIupz9VqvrcM9vvZqwb6mhvBqwStQ
+    Ke6h9HyyrOEbpn2V+KAUGIVgE0J6riWjPi3YwZnasGo66EQU0sooXFvL1wDan45A
+    Fu8SpKeH3EIfMqV9YFzGPK29Amk61oRgzsI53URoW5SgE1rZmHaSZgqxxm69U5nd
+    wdih+U52HstNpddUv4n1ErIcoXvjSLB6MTPPrI1fe+KxiYi+Yl5AUJkLVGC9GUpj
+    NMFCXEJENHpI2hPKiWzXkmKg6AqRLYrywLW3k/tD/0MqBPR2NBqVUYv1aBOT8N3S
+    YAHY+BtX4sjMJlKvDmc87963T/mrnDN+gvEYwtXkrVkh+t4GE5ZYcw4TwAZ1J1FZ
+    UzVsTf1TAYxZWRAtHnjzvScPinx7DES2hmmmWAIsI99QUBhokYaQsITRRHDo4c0P
+    zA==
+    =ShVf
+    -----END PGP MESSAGE-----
+
   config:
     datacenter: digitalocean
     primary_datacenter: digitalocean

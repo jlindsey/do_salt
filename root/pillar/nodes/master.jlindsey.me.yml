@@ -24,3 +24,28 @@ wireguard:
         U5m2ziIHJsNM
         =N3n+
         -----END PGP MESSAGE-----
+
+consul:
+  config:
+    acl:
+      tokens:
+        agent: |
+          -----BEGIN PGP MESSAGE-----
+          Version: GnuPG v2
+
+          hQIMA4StMYXy+9JEARAAx+ygESjRKibt5AsOHVoj3STi0D+larTGS4IaCIgyGs4D
+          mdRtmzzvUoJCnb5lLD0RNwS/fInzmv62bwCzUV4ihaUalubK7uWtPvG+YHRMugE/
+          vvUhr4kpHT+WRxu+/a3LPUT49/krQ4SaIaA6A6oFm+rueog5eMP+Fg1aZc5ENLZJ
+          eQkFMcJSlf2Wq4PHzKX//Db6cgQJr7zEzZmUg8crnnkar0Xfr9BHsm1s1Sc2MMYW
+          Onjkfjog1aAUiuVq28tlCzeEbJfpMs175KT6bHFFrsuMaV9cQJzEwO0zYDZjA9fj
+          NvtAyzmL/XcluABI6lR2VbJDcf7/qAZ8YC/y22EEjZdS+iRwyiEqLXQxlX8eepOh
+          +KtNqt3qrsdKvnr10/8U4p/is77oo5851ixZSUR1XLCXzk9eT4c7xOMHN1GHUZlO
+          sCa9AOwmMicT3aQTPW/wIetrDmirikz6ZH+IeL6ZoTRYf1sncay27FG9kBGwGjoP
+          mIRUoUI47tc8YzAo0n9IjzMohixQYV7WYyVIlODQzi6fDit3sg5Qsi64VEE/4eaf
+          gb/+rE2F0CS8mMI1p4HNLklbHg//A2kNop37XCli+ovlFrIXasher9sdA3IhyY76
+          Mwr+qSsVZeCZpt5WYvCxIZHxSWwogiIn/S640U3kwY7/PbxR+P2QH30KGmYGVSzS
+          YAG0MErzr51QQRZBUjMFCuX1anpUPii0roVdp968xfgaTV8TGdH5KCIDMk+bIRIf
+          D4mChfYPJXgewUe9yXlJ16hBVuCBFO9myHpr8yPX+WQs37MMUBkDWWL92Ag4SyRk
+          lg==
+          =I44X
+          -----END PGP MESSAGE-----
