@@ -8,7 +8,7 @@
         - description: Salt ACL management permissions
         - rules: acl = "write"
         - consul_host: http://127.0.0.1:8500
-        - consul_token: {{ salt['pillar.get']('consul:config:acl:tokens:master') }}
+        - consul_token: {{ tokens['bootstrap'] }}
     consul_token.manage:
         - name: salt-acl
         - description: Salt ACL management token
@@ -16,7 +16,7 @@
         - policies:
             - salt-acl
         - consul_host: http://127.0.0.1:8500
-        - consul_token: {{ salt['pillar.get']('consul:config:acl:tokens:master') }}
+        - consul_token: {{ tokens['bootstrap'] }}
         - require:
             - consul_policy: .salt_token
 

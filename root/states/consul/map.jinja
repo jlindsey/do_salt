@@ -3,7 +3,8 @@
 {% set tokens = {
     'salt': salt['pillar.get']('consul:tokens:salt_acl_token', false),
     'agent': salt['pillar.get']('consul:config:acl:tokens:agent', false),
- } %}
+    'bootstrap': salt['pillar.get']('consul:config:acl:tokens:master', false),
+} %}
 
 {% set managed_policies = salt['pillar.get']('salt:policies', {}) %}
 {% set managed_tokens = salt['pillar.get']('salt:tokens', {}) %}
