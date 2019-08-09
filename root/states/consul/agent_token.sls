@@ -15,6 +15,8 @@
         - consul_token: {{ tokens['salt'] }}
         - require:
             - consul.install::goal
+
+.agent_token:
     consul_token.manage:
         - name: consul-agent-{{ host }}
         - description: Node agent token for {{ host }}

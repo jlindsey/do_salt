@@ -1,7 +1,7 @@
 {% set host = salt['grains.get']('host') %}
 
 {% set tokens = {
-    'salt': salt['pillar.get']('consul:tokens:salt_acl_token', false),
+    'salt': salt['pillar.get']('consul:salt_acl_token', false),
     'agent': salt['pillar.get']('consul:config:acl:tokens:agent', false),
     'bootstrap': salt['pillar.get']('consul:config:acl:tokens:master', false),
 } %}
